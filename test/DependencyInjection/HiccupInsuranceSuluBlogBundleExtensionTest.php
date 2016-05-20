@@ -2,7 +2,7 @@
 
 namespace Test\DependencyInjection;
 
-use HiccupInsurance\SuluBlogBundle\DependencyInjection\HiccupInsuranceSuluBlogBundleExtension;
+use HiccupInsurance\SuluBlogBundle\DependencyInjection\HiccupInsuranceSuluBlogExtension;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class HiccupInsuranceSuluBlogBundleExtensionTest extends \PHPUnit_Framework_TestCase
@@ -13,7 +13,7 @@ class HiccupInsuranceSuluBlogBundleExtensionTest extends \PHPUnit_Framework_Test
     #----------------------------------------------------------------------------------------------
 
     /**
-     * @var HiccupInsuranceSuluBlogBundleExtension
+     * @var HiccupInsuranceSuluBlogExtension
      */
     private $extension;
 
@@ -40,6 +40,6 @@ class HiccupInsuranceSuluBlogBundleExtensionTest extends \PHPUnit_Framework_Test
     {
         parent::setUp();
 
-        $this->extension = new HiccupInsuranceSuluBlogBundleExtension();
+        $this->extension = new HiccupInsuranceSuluBlogExtension();
     }
 }

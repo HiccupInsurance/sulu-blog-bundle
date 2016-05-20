@@ -14,19 +14,15 @@ class BlogAdmin extends Admin
      */
     public function __construct($title)
     {
-        $rootNavigationItem = new NavigationItem($title);
+        $root = new NavigationItem($title);
         $section = new NavigationItem('navigation.webspaces');
+        $blog = new NavigationItem('navigation.blog', $section);
 
-        $global = new NavigationItem('navigation.global-content');
-        $section->addChild($global);
+        $listPost = new NavigationItem('navigation.list_post', $blog);
+        $listPost->setAction('blog/list');
 
-        $news = new NavigationItem('navigation.news');
-        $news->setAction('example/news');
-        $section->addChild($news);
-
-        $rootNavigationItem->addChild($section);
-
-        $this->setNavigation(new Navigation($rootNavigationItem));
+        $root->addChild($section);
+        $this->setNavigation(new Navigation($root));
     }
 
     /**
@@ -34,6 +30,6 @@ class BlogAdmin extends Admin
      */
     public function getJsBundleName()
     {
-        return 'hiccupinsurancesulublogbundle';
+        return 'hiccupinsurancesulublog';
     }
 }
