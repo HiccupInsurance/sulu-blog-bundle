@@ -8,6 +8,11 @@
             "HiccupInsurance\\SuluBlogBundle\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    },
     "authors": [
         {
             "name": "Budi Arsana",
@@ -17,5 +22,8 @@
     "require": {
         "sulu/sulu": "^1.2.0",
         "jackalope/jackalope-doctrine-dbal": "~1.2.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
     }
 }

@@ -5,20 +5,19 @@ require.config({
     }
 });
 
-define(function() {
+define(function () {
     'use strict';
 
     return {
 
-        name: "Example News Bundle",
+        name: "Hiccup Blog Bundle",
 
-        initialize: function(app) {
-
+        initialize: function (app) {
             app.components.addSource('hi-sulu-blog', '/bundles/hiccupinsurancesulublogbundle/js/component');
 
             app.sandbox.mvc.routes.push({
                 route: 'news',
-                callback: function() {
+                callback: function () {
                     return '<div data-aura-component="blog/list@hi-sulu-blog" data-aura-name="sulu" />';
                 }
             });

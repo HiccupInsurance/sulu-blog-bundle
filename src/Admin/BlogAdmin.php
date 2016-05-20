@@ -9,6 +9,9 @@ use Sulu\Bundle\AdminBundle\Navigation\NavigationItem;
 class BlogAdmin extends Admin
 {
 
+    /**
+     * @param string $title
+     */
     public function __construct($title)
     {
         $rootNavigationItem = new NavigationItem($title);
