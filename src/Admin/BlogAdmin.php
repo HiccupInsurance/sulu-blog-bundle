@@ -16,9 +16,9 @@ class BlogAdmin extends Admin
     {
         $root = new NavigationItem($title);
         $section = new NavigationItem('navigation.webspaces');
-        $blog = new NavigationItem('navigation.blog', $section);
+        $blog = new NavigationItem('Blog', $section);
 
-        $listPost = new NavigationItem('navigation.list_post', $blog);
+        $listPost = new NavigationItem('List posts', $blog);
         $listPost->setAction('blog/list');
 
         $root->addChild($section);
