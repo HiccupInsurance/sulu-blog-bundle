@@ -13,9 +13,14 @@ Add the bundle to AbstractKernel
 
 ```
 new Hiccup\SuluBlogBundle\HicuppInsuranceSuluBlogBundle() 
-
 ```
 
-```
-composer update hiccup/sulu-blog-bundle --root-reqs --profile --no-dev -vvv --prefer-dist --no-scripts
-```
+
+# Contributor guides:
+
+- Follow [PSR](http://www.php-fig.org/psr/) code style
+- Entity table name prefix `hiccup_sulu_blog_`
+
+# Tips:
+
+- Use command and adjust as needed `composer update hiccup/sulu-blog-bundle --root-reqs --profile --no-dev -vvv --prefer-dist --no-scripts` to quickly update the package for testing
