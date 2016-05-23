@@ -5,7 +5,7 @@
     "license": "Apache License",
     "autoload": {
         "psr-4": {
-            "HiccupInsurance\\SuluBlogBundle\\": "src/"
+            "Hiccup\\SuluBlogBundle\\": "src/"
         }
     },
     "autoload-dev": {

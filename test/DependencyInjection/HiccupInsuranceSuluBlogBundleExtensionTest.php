@@ -2,7 +2,7 @@
 
 namespace Test\DependencyInjection;
 
-use HiccupInsurance\SuluBlogBundle\DependencyInjection\HiccupInsuranceSuluBlogExtension;
+use Hiccup\SuluBlogBundle\DependencyInjection\HiccupInsuranceSuluBlogExtension;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class HiccupInsuranceSuluBlogBundleExtensionTest extends \PHPUnit_Framework_TestCase

@@ -4,8 +4,8 @@ services:
     # Admins
     #----------------------------------------------------------------------------------------------
 
-    hi_sulu_blog.admin.admin:
-        class: HiccupInsurance\SuluBlogBundle\Admin\BlogAdmin
+    hiccup_sulu_blog.admin.admin:
+        class: Hiccup\SuluBlogBundle\Admin\BlogAdmin
         arguments:
             - "%sulu_admin.name%"
         tags:

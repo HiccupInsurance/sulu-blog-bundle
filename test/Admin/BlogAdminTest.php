@@ -2,7 +2,7 @@
 
 namespace Test\Admin;
 
-use HiccupInsurance\SuluBlogBundle\Admin\BlogAdmin;
+use Hiccup\SuluBlogBundle\Admin\BlogAdmin;
 use Sulu\Bundle\AdminBundle\Admin\Admin;
 
 class BlogAdminTest extends \PHPUnit_Framework_TestCase
@@ -34,7 +34,7 @@ class BlogAdminTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetJsBundleName()
     {
-        $this->assertEquals('hiccupinsurancesulublogbundle', $this->admin->getJsBundleName());
+        $this->assertEquals('hiccupsulublog', $this->admin->getJsBundleName());
     }
 
     #----------------------------------------------------------------------------------------------
