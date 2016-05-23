@@ -2,7 +2,7 @@
 
 namespace Test\DependencyInjection;
 
-use HiccupInsurance\SuluBlogBundle\DependencyInjection\Configuration;
+use Hiccup\SuluBlogBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 

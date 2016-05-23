@@ -2,7 +2,7 @@
 
 namespace Test;
 
-use HiccupInsurance\SuluBlogBundle\HiccupInsuranceSuluBlogBundle;
+use Hiccup\SuluBlogBundle\HiccupSuluBlogBundle;
 
 class HiccupInsuranceSuluBlogBundleTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class HiccupInsuranceSuluBlogBundleTest extends \PHPUnit_Framework_TestCase
     #----------------------------------------------------------------------------------------------
 
     /**
-     * @var HiccupInsuranceSuluBlogBundle
+     * @var HiccupSuluBlogBundle
      */
     private $bundle;
 
@@ -25,7 +25,7 @@ class HiccupInsuranceSuluBlogBundleTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstance()
     {
-        $this->assertInstanceOf(HiccupInsuranceSuluBlogBundle::class, $this->bundle);
+        $this->assertInstanceOf(HiccupSuluBlogBundle::class, $this->bundle);
     }
 
     #----------------------------------------------------------------------------------------------
@@ -39,6 +39,6 @@ class HiccupInsuranceSuluBlogBundleTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->bundle = new HiccupInsuranceSuluBlogBundle();
+        $this->bundle = new HiccupSuluBlogBundle();
     }
 }

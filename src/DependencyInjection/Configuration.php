@@ -1,6 +1,6 @@
 <?php
 
-namespace HiccupInsurance\SuluBlogBundle\DependencyInjection;
+namespace Hiccup\SuluBlogBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

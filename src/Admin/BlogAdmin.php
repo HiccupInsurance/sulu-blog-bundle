@@ -1,6 +1,6 @@
 <?php
 
-namespace HiccupInsurance\SuluBlogBundle\Admin;
+namespace Hiccup\SuluBlogBundle\Admin;
 
 use Sulu\Bundle\AdminBundle\Admin\Admin;
 use Sulu\Bundle\AdminBundle\Navigation\Navigation;
@@ -30,6 +30,6 @@ class BlogAdmin extends Admin
      */
     public function getJsBundleName()
     {
-        return 'hiccupinsurancesulublog';
+        return 'hiccupsulublog';
     }
 }

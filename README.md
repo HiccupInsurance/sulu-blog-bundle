@@ -4,12 +4,16 @@ Sulu.io CMS BlogBundle
 # Installation
 
 ```
-composer require hiccup-insurance/sulu-blog-bundle
+composer require hiccup/sulu-blog-bundle
 ```
 
 Add the bundle to AbstractKernel
 
 ```
-new HiccupInsurance\SuluBlogBundle\HicuppInsuranceSuluBlogBundle() 
+new Hiccup\SuluBlogBundle\HicuppInsuranceSuluBlogBundle() 
 
+```
+
+```
+composer update hiccup/sulu-blog-bundle --root-reqs --profile --no-dev -vvv --prefer-dist --no-scripts
 ```
