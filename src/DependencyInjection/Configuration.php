@@ -14,7 +14,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('hiccup_insurance_sulu_blog');
+        $treeBuilder->root('hiccup_sulu_blog');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
