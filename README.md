@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/HiccupInsurance/sulu-blog-bundle/badges/gpa.svg)](https://codeclimate.com/github/HiccupInsurance/sulu-blog-bundle)
+
 # sulu-blog-bundle
 Sulu.io CMS BlogBundle
 
