@@ -3,12 +3,16 @@
 namespace Hiccup\SuluBlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="hiccup_sulu_blog_post")
  * @ORM\Entity(repositoryClass="Hiccup\SuluBlogBundle\Repository\PostRepository")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ *
  * @codeCoverageIgnore
  */
 class Post
@@ -31,6 +35,11 @@ class Post
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Serializer\ReadOnly
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     * @Serializer\Groups({"post"})
      */
     private $id;
 
@@ -41,6 +50,10 @@ class Post
      *
      * @Assert\NotNull()
      * @Assert\Type(type="string")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"post"})
      */
     private $title;
 
@@ -51,6 +64,10 @@ class Post
      *
      * @Assert\NotNull()
      * @Assert\Type(type="string")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"post"})
      */
     private $headline;
 
@@ -61,6 +78,10 @@ class Post
      *
      * @Assert\NotNull()
      * @Assert\Type(type="string")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"post"})
      */
     private $content;
 
@@ -71,6 +92,10 @@ class Post
      *
      * @Assert\NotNull()
      * @Assert\Type(type="\DateTime")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("\DateTime")
+     * @Serializer\Groups({"post"})
      */
     private $publishedDate;
 
@@ -81,6 +106,10 @@ class Post
      *
      * @Assert\NotNull()
      * @Assert\Type(type="array")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("array")
+     * @Serializer\Groups({"post"})
      */
     private $tags;
 
@@ -91,6 +120,10 @@ class Post
      *
      * @Assert\NotNull()
      * @Assert\Type(type="string")
+     * 
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     * @Serializer\Groups({"post"})
      */
     private $status = self::STATUS_DRAFT;
 
