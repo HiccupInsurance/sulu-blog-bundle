@@ -1,7 +1,7 @@
 require.config({
     paths: {
-        hi_sulu_blog: '../../hiccupinsurancesulublog/js',
-        hi_sulu_blog_css: '../../hiccupinsurancesulublog/css'
+        hi_sulu_blog: '../../hiccupsulublog/js',
+        hi_sulu_blog_css: '../../hiccupsulublog/css'
     }
 });
 
@@ -13,7 +13,7 @@ define(function () {
         name: "Hiccup Blog Bundle",
 
         initialize: function (app) {
-            app.components.addSource('hi-sulu-blog', '/bundles/hiccupinsurancesulublog/js/component');
+            app.components.addSource('hi-sulu-blog', '/bundles/hiccupsulublog/js/component');
 
             app.sandbox.mvc.routes.push({
                 route: 'blog/list',

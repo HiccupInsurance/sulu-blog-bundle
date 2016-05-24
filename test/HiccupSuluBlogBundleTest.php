@@ -4,7 +4,7 @@ namespace Test;
 
 use Hiccup\SuluBlogBundle\HiccupSuluBlogBundle;
 
-class HiccupInsuranceSuluBlogBundleTest extends \PHPUnit_Framework_TestCase
+class HiccupSuluBlogBundleTest extends \PHPUnit_Framework_TestCase
 {
     
     #----------------------------------------------------------------------------------------------
