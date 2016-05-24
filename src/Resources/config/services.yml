@@ -10,3 +10,23 @@ services:
             - "%sulu_admin.name%"
         tags:
             - { name: sulu.admin }
+
+    #----------------------------------------------------------------------------------------------
+    # Managers
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.manager.post:
+        class: Hiccup\SuluBlogBundle\Manager\PostManager
+        arguments:
+            - "@hiccup_sulu_blog.repository.post"
+            - "@validator"
+
+    #----------------------------------------------------------------------------------------------
+    # Repositories
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.repository.post:
+        class: Hiccup\SuluBlogBundle\Repository\PostRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Hiccup\SuluBlogBundle\Entity\Post

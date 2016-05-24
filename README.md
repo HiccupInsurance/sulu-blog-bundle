@@ -17,6 +17,14 @@ Add the bundle to AbstractKernel
 new Hiccup\SuluBlogBundle\HicuppSuluBlogBundle() 
 ```
 
+Add routing to `app/config/admin/routing.yml`
+
+```
+hi_sulu_blog:
+    resource: "@HiccupSuluBlogBundle/Resources/config/routing.yml"
+```
+
+Run migrations script or update your database after enable the bundle
 
 # Contributor guides:
 

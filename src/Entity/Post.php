@@ -91,10 +91,10 @@ class Post
      * @ORM\Column(name="published_date", type="datetime")
      *
      * @Assert\NotNull()
-     * @Assert\Type(type="\DateTime")
+     * @Assert\Type(type="DateTime")
      * 
      * @Serializer\Expose
-     * @Serializer\Type("\DateTime")
+     * @Serializer\Type("DateTime")
      * @Serializer\Groups({"post"})
      */
     private $publishedDate;
@@ -111,7 +111,7 @@ class Post
      * @Serializer\Type("array")
      * @Serializer\Groups({"post"})
      */
-    private $tags;
+    private $tags = [];
 
     /**
      * @var string
