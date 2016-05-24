@@ -1,5 +1,5 @@
 {
-    "name": "hiccup-insurance/sulu-blog-bundle",
+    "name": "hiccup/sulu-blog-bundle",
     "description": "Sulu blog bundle",
     "type": "symfony-bundle",
     "license": "Apache License",

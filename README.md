@@ -14,7 +14,7 @@ composer require hiccup/sulu-blog-bundle
 Add the bundle to AbstractKernel
 
 ```
-new Hiccup\SuluBlogBundle\HicuppInsuranceSuluBlogBundle() 
+new Hiccup\SuluBlogBundle\HicuppSuluBlogBundle() 
 ```
 
 
