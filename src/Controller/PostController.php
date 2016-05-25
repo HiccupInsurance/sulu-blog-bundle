@@ -5,7 +5,9 @@ namespace Hiccup\SuluBlogBundle\Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Hiccup\SuluBlogBundle\Entity\Post;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration as FrameworkExtra;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class PostController
@@ -19,13 +21,25 @@ class PostController extends FOSRestController
      * @Rest\Get("posts")
      * @Rest\View(serializerGroups={"post"})
      *
-     * @return array
+     * @return Response
      */
     public function listAction()
     {
-        return [
-            'test' => 'success'
-        ];
+        return $this->handleView($this->view($this->get('hiccup_sulu_blog.repository.post')->findAll()));
+    }
+
+    /**
+     * @Rest\Get("posts/{id}")
+     * @Rest\View(serializerGroups={"post"})
+     *
+     * @FrameworkExtra\ParamConverter("post")
+     *
+     * @param Post $post
+     * @return Response
+     */
+    public function getAction(Post $post)
+    {
+        return $this->handleView($this->view($post));
     }
 
     /**
@@ -33,7 +47,7 @@ class PostController extends FOSRestController
      * @Rest\View(serializerGroups={"post"})
      *
      * @param Request $request
-     * @return Post
+     * @return Response
      */
     public function postAction(Request $request)
     {
@@ -43,5 +57,38 @@ class PostController extends FOSRestController
         $this->getDoctrine()->getManager()->flush();
 
         return $this->handleView($this->view($post));
+    }
+
+    /**
+     * @Rest\Put("posts/{id}")
+     * @Rest\View(serializerGroups={"post"})
+     *
+     * @FrameworkExtra\ParamConverter("post")
+     *
+     * @param Post $post
+     * @return Response
+     */
+    public function putAction(Post $post)
+    {
+        
+
+        return $this->handleView($this->view($post));
+    }
+
+    /**
+     * @Rest\Delete("posts/{id}")
+     * @Rest\View(serializerGroups={"post"})
+     *
+     * @FrameworkExtra\ParamConverter("post")
+     *
+     * @param Post $post
+     * @return Response
+     */
+    public function deleteAction(Post $post)
+    {
+        $this->get('hiccup_sulu_blog.manager.post')->remove($post);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->handleView($this->view());
     }
 }

@@ -30,3 +30,12 @@ services:
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - Hiccup\SuluBlogBundle\Entity\Post
+
+    #----------------------------------------------------------------------------------------------
+    # Utilities
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.utility.serializer:
+        class: SerializerUtility
+        arguments:
+            - "@jms_serializer"
