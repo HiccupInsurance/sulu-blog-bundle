@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="hiccup_sulu_blog_post")
  * @ORM\Entity(repositoryClass="Hiccup\SuluBlogBundle\Repository\PostRepository")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @Serializer\ExclusionPolicy("all")
  *
@@ -126,6 +127,52 @@ class Post
      * @Serializer\Groups({"post"})
      */
     private $status = self::STATUS_DRAFT;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @Assert\Type(type="DateTime")
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime")
+     * @Serializer\Groups({"post"})
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Assert\Type(type="DateTime")
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime")
+     * @Serializer\Groups({"post"})
+     */
+    private $updatedAt;
+
+    #----------------------------------------------------------------------------------------------
+    # Doctrine methods
+    #----------------------------------------------------------------------------------------------
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     #----------------------------------------------------------------------------------------------
     # Properties accessor

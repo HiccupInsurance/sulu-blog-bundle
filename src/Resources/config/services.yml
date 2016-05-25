@@ -36,6 +36,6 @@ services:
     #----------------------------------------------------------------------------------------------
 
     hiccup_sulu_blog.utility.serializer:
-        class: SerializerUtility
+        class: Hiccup\SuluBlogBundle\Utility\SerializerUtility
         arguments:
             - "@jms_serializer"
