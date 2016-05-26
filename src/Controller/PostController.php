@@ -48,7 +48,7 @@ class PostController extends FOSRestController
         $list = new ListRepresentation(
             $results,
             'data-items',
-            'hiccup_sulu_blog_post_get_fields',
+            'hiccup_sulu_blog_post_list',
             $request->query->all(),
             $listBuilder->getCurrentPage(),
             $listBuilder->getLimit(),
