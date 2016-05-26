@@ -12,6 +12,15 @@ services:
             - { name: sulu.admin }
 
     #----------------------------------------------------------------------------------------------
+    # Constructors
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.constructor.object:
+        class: Hiccup\SuluBlogBundle\Constructor\ObjectConstructor
+        arguments:
+            - "@jms_serializer.unserialize_object_constructor"
+
+    #----------------------------------------------------------------------------------------------
     # Managers
     #----------------------------------------------------------------------------------------------
 
@@ -38,4 +47,5 @@ services:
     hiccup_sulu_blog.utility.serializer:
         class: Hiccup\SuluBlogBundle\Utility\SerializerUtility
         arguments:
-            - "@jms_serializer"
+            - "@hiccup_sulu_blog.constructor.object"
+            - "@jms_serializer.identical_property_naming_strategy"

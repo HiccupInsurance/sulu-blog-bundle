@@ -25,7 +25,14 @@ define(function () {
             app.sandbox.mvc.routes.push({
                 route: 'blog/add-posts',
                 callback: function () {
-                    return '<div data-aura-component="blog/post/form@hiccup-sulu-blog" data-aura-name="sulu" />';
+                    return '<div data-aura-component="blog/post/form@hiccup-sulu-blog" />';
+                }
+            });
+
+            app.sandbox.mvc.routes.push({
+                route: 'blog/posts::id/edit',
+                callback: function(id) {
+                    return '<div data-aura-component="blog/post/form@hiccup-sulu-blog" data-aura-id="' + id + '"/>';
                 }
             });
         }

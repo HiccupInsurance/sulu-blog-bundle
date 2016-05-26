@@ -24,6 +24,7 @@ class PostController extends FOSRestController
     #----------------------------------------------------------------------------------------------
 
     const ENTITY_NAME = 'HiccupSuluBlogBundle:Post';
+    const DATA_FORMAT = 'json';
 
     #----------------------------------------------------------------------------------------------
     # Public methods
@@ -96,7 +97,12 @@ class PostController extends FOSRestController
     public function postAction(Request $request)
     {
         /** @var Post $post */
-        $post = $this->get('hiccup_sulu_blog.utility.serializer')->deserialize($request->getContent(), Post::class);
+        $post = $this->get('hiccup_sulu_blog.utility.serializer')->deserialize(
+            $request->getContent(),
+            Post::class,
+            self::DATA_FORMAT
+        );
+
         $this->get('hiccup_sulu_blog.manager.post')->save($post);
         $this->getDoctrine()->getManager()->flush();
 
@@ -115,7 +121,14 @@ class PostController extends FOSRestController
      */
     public function putAction(Request $request, Post $post)
     {
-        $post = $this->get('hiccup_sulu_blog.utility.serializer')->apply($post, $request->getContent());
+        $post = $this->get('hiccup_sulu_blog.utility.serializer')->applyDiff(
+            $post,
+            $request->getContent(),
+            self::DATA_FORMAT
+        );
+
+        $this->get('hiccup_sulu_blog.manager.post')->save($post);
+        $this->getDoctrine()->getManager()->flush();
 
         return $this->handleView($this->view($post));
     }

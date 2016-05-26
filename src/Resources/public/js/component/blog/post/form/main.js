@@ -1,5 +1,4 @@
-define(['text!./form.html'], function(form) {
-    'use strict';
+define(['underscore', 'jquery', 'text!./form.html'], function(_, $, form) {
 
     return {
 
@@ -7,11 +6,15 @@ define(['text!./form.html'], function(form) {
             templates: {
                 form: form,
                 url: '/admin/api/hiccup-sulu-blog/posts<% if (!!id) { %>/<%= id %><% } %>'
+            },
+            translations: {
+                title: 'public.title',
+                content: 'news.content'
             }
         },
 
         header: {
-            title: 'Headline',
+            title: 'news.headline',
             toolbar: {
                 buttons: {
                     save: {
@@ -36,8 +39,12 @@ define(['text!./form.html'], function(form) {
         },
 
         render: function() {
-            this.$el.html(this.templates.form());
-            this.sandbox.form.create('#post-form');
+            this.$el.html(this.templates.form({translations: this.translations}));
+
+            this.form = this.sandbox.form.create('#post-form');
+            this.form.initialized.then(function() {
+                this.sandbox.form.setData('#post-form', this.data || {});
+            }.bind(this));
         },
 
         bindDomEvents: function() {
@@ -58,9 +65,10 @@ define(['text!./form.html'], function(form) {
                 return;
             }
 
-            var data = this.sandbox.form.getData('#post-form');
+            var data = this.sandbox.form.getData('#post-form'),
+                url = this.templates.url({id: this.options.id});
 
-            this.sandbox.util.save(this.templates.url({id:null}), 'POST', data).then(function(response) {
+            this.sandbox.util.save(url, !this.options.id ? 'POST' : 'PUT', data).then(function(response) {
                 this.afterSave(response, action);
             }.bind(this));
         },
@@ -73,8 +81,23 @@ define(['text!./form.html'], function(form) {
             } else if (action === 'new') {
                 this.sandbox.emit('sulu.router.navigate', 'blog/add-posts');
             } else if (!this.options.id) {
-                this.sandbox.emit('sulu.router.navigate', 'blog/posts/:' + response.id);
+                this.sandbox.emit('sulu.router.navigate', 'blog/posts:' + response.id + '/edit');
             }
+        },
+
+        loadComponentData: function() {
+            var promise = $.Deferred();
+
+            if (!this.options.id) {
+                promise.resolve();
+
+                return promise;
+            }
+            this.sandbox.util.load(_.template(this.defaults.templates.url, {id: this.options.id})).done(function(data) {
+                promise.resolve(data);
+            });
+
+            return promise;
         }
     };
 });

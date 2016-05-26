@@ -2,8 +2,11 @@
 
 namespace Test\Utility;
 
+use Hiccup\SuluBlogBundle\Constructor\ObjectConstructor;
 use Hiccup\SuluBlogBundle\Entity\Post;
 use Hiccup\SuluBlogBundle\Utility\SerializerUtility;
+use JMS\Serializer\Construction\UnserializeObjectConstructor;
+use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerInterface;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -20,11 +23,6 @@ class SerializerUtilityTest extends \PHPUnit_Framework_TestCase
     private $utility;
 
     /**
-     * @var SerializerInterface|ObjectProphecy
-     */
-    private $serializer;
-
-    /**
      * @var Post|ObjectProphecy
      */
     private $object;
@@ -36,36 +34,54 @@ class SerializerUtilityTest extends \PHPUnit_Framework_TestCase
     /**
      * @group unit
      */
+    public function testInstance()
+    {
+        $this->assertInstanceOf(SerializerInterface::class, $this->utility);
+    }
+
+    /**
+     * @group unit
+     */
     public function testDeserialize()
     {
         $data = json_encode(['title' => 'alpha']);
-        $this->serializer->deserialize($data, Post::class, 'json')->shouldBeCalledTimes(1)
-            ->willReturn($this->object->reveal());
 
-        $this->utility->deserialize($data, Post::class);
+        /** @var Post $object */
+        $object = $this->utility->deserialize($data, Post::class, 'json');
+
+        $this->assertInstanceOf(Post::class, $object);
+        $this->assertEquals('alpha', $object->getTitle());
     }
 
     /**
      * @group unit
      */
-    public function testApply()
+    public function testSerialize()
     {
-        $data = json_encode(['title' => 'alpha']);
-        $this->object->setTitle('alpha')->shouldBeCalledTimes(1);
+        $object = new Post();
+        $object->setTitle('alpha');
 
-        $this->utility->apply($this->object->reveal(), $data);
+        $serializedData = $this->utility->serialize($object, 'json');
+
+        $this->assertEquals(json_encode(['title' => 'alpha', 'tags' => [], 'status' => 'draft']), $serializedData);
     }
 
     /**
      * @group unit
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage Method "setNotExistedArray" not exist
      */
-    public function testApplyThrowBadMethodCallException()
+    public function testApplyDiff()
     {
-        $data = json_encode(['notExistedArray' => 'alpha']);
+        $object = new Post();
+        $object->setTitle('alpha');
+        $object->setContent('beta');
+        $data = json_encode(['title' => 'charlie']);
 
-        $this->utility->apply($this->object->reveal(), $data);
+        /** @var Post $result */
+        $result = $this->utility->applyDiff($object, $data, 'json');
+        
+        $this->assertInstanceOf(Post::class, $result);
+        $this->assertEquals('charlie', $result->getTitle());
+        $this->assertEquals('beta', $result->getContent());
     }
 
     #----------------------------------------------------------------------------------------------
@@ -77,8 +93,10 @@ class SerializerUtilityTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->serializer = $this->prophesize(SerializerInterface::class);
-        $this->utility = new SerializerUtility($this->serializer->reveal());
+        $this->utility = new SerializerUtility(
+            new ObjectConstructor(new UnserializeObjectConstructor()),
+            new IdenticalPropertyNamingStrategy()
+        );
 
         $this->object = $this->prophesize(Post::class);
     }

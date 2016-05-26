@@ -2,9 +2,14 @@
 
 namespace Hiccup\SuluBlogBundle\Utility;
 
+use JMS\Serializer\Construction\ObjectConstructorInterface;
+use JMS\Serializer\DeserializationContext;
+use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 
-class SerializerUtility
+class SerializerUtility implements SerializerInterface
 {
 
     #----------------------------------------------------------------------------------------------
@@ -26,9 +31,19 @@ class SerializerUtility
     # Magic methods
     #----------------------------------------------------------------------------------------------
 
-    public function __construct(SerializerInterface $serializer)
-    {
-        $this->serializer = $serializer;
+    /**
+     * SerializerUtility constructor.
+     * @param ObjectConstructorInterface $objectConstructor
+     * @param PropertyNamingStrategyInterface $namingStrategy
+     */
+    public function __construct(
+        ObjectConstructorInterface $objectConstructor, 
+        PropertyNamingStrategyInterface $namingStrategy
+    ) {
+        $this->serializer = SerializerBuilder::create()
+            ->setPropertyNamingStrategy($namingStrategy)
+            ->setObjectConstructor($objectConstructor)
+            ->build();
     }
 
     #----------------------------------------------------------------------------------------------
@@ -36,52 +51,34 @@ class SerializerUtility
     #----------------------------------------------------------------------------------------------
 
     /**
-     * @param string $data
-     * @param string $type
-     * @return object
+     * {@inheritdoc}
      */
-    public function deserialize($data, $type)
+    public function deserialize($data, $type, $format, DeserializationContext $context = null)
     {
-        return $this->serializer->deserialize($data, $type, self::FORMAT);
+        return $this->serializer->deserialize($data, $type, $format, $context);
     }
 
     /**
-     * Apple $data string into $object
+     * {@inheritdoc}
+     */
+    public function serialize($data, $format, SerializationContext $context = null)
+    {
+        return $this->serializer->serialize($data, $format, $context = null);
+    }
+
+    /**
+     * Apple partial update to existing object
      *
      * @param object $object
      * @param string $data new data to be applied
-     * @return object
+     * @param string $format
+     * @return object|mixed
      */
-    public function apply($object, $data)
+    public function applyDiff($object, $data, $format)
     {
-        $dataArray = json_decode($data);
+        $context = new DeserializationContext();
+        $context->attributes->set('target', $object);
 
-        foreach ($dataArray as $property => $value) {
-            $setter = $this->getSetter($property, $object);
-            $object->$setter($value);
-        }
-        
-        return $object;
-    }
-
-    #----------------------------------------------------------------------------------------------
-    # Private methods
-    #----------------------------------------------------------------------------------------------
-
-    /**
-     * @param string $property
-     * @param object $entity
-     *
-     * @return string
-     * @throws \BadMethodCallException
-     */
-    private function getSetter($property, $entity)
-    {
-        $setter = 'set' . ucfirst($property);
-        if (method_exists($entity, $setter) === false) {
-            throw new \BadMethodCallException(sprintf('Method "%s" not exist', $setter));
-        }
-
-        return $setter;
+        return $this->deserialize($data, get_class($object), $format, $context);
     }
 }
