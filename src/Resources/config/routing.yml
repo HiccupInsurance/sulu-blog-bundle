@@ -1,0 +1,4 @@
+hi_sulu_blog_post:
+    resource: "@HiccupSuluBlogBundle/Controller/PostController.php"
+    type:     rest
+    prefix:   /admin/api/hiccup-sulu-blog

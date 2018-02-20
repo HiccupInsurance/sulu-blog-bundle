@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="hiccup_sulu_blog_post")
  * @ORM\Entity(repositoryClass="Hiccup\SuluBlogBundle\Repository\PostRepository")
  * @ORM\ChangeTrackingPolicy("DEFERRED_EXPLICIT")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @Serializer\ExclusionPolicy("all")
  *
@@ -91,10 +92,10 @@ class Post
      * @ORM\Column(name="published_date", type="datetime")
      *
      * @Assert\NotNull()
-     * @Assert\Type(type="\DateTime")
+     * @Assert\Type(type="DateTime")
      * 
      * @Serializer\Expose
-     * @Serializer\Type("\DateTime")
+     * @Serializer\Type("DateTime")
      * @Serializer\Groups({"post"})
      */
     private $publishedDate;
@@ -111,7 +112,7 @@ class Post
      * @Serializer\Type("array")
      * @Serializer\Groups({"post"})
      */
-    private $tags;
+    private $tags = [];
 
     /**
      * @var string
@@ -126,6 +127,52 @@ class Post
      * @Serializer\Groups({"post"})
      */
     private $status = self::STATUS_DRAFT;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @Assert\Type(type="DateTime")
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime")
+     * @Serializer\Groups({"post"})
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     *
+     * @Assert\Type(type="DateTime")
+     *
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime")
+     * @Serializer\Groups({"post"})
+     */
+    private $updatedAt;
+
+    #----------------------------------------------------------------------------------------------
+    # Doctrine methods
+    #----------------------------------------------------------------------------------------------
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
 
     #----------------------------------------------------------------------------------------------
     # Properties accessor
@@ -149,10 +196,13 @@ class Post
 
     /**
      * @param string $title
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = $title;
+        
+        return $this;
     }
 
     /**
@@ -165,10 +215,13 @@ class Post
 
     /**
      * @param string $content
+     * @return $this
      */
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**
@@ -181,10 +234,13 @@ class Post
 
     /**
      * @param \DateTime $publishedDate
+     * @return $this
      */
     public function setPublishedDate(\DateTime $publishedDate)
     {
         $this->publishedDate = $publishedDate;
+
+        return $this;
     }
 
     /**
@@ -197,10 +253,13 @@ class Post
 
     /**
      * @param array $tags
+     * @return $this
      */
     public function setTags($tags)
     {
         $this->tags = $tags;
+
+        return $this;
     }
 
     /**
@@ -213,10 +272,13 @@ class Post
 
     /**
      * @param string $headline
+     * @return $this
      */
     public function setHeadline($headline)
     {
         $this->headline = $headline;
+
+        return $this;
     }
 
     /**
@@ -229,10 +291,13 @@ class Post
 
     /**
      * @param string $status
+     * @return $this
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
     }
 
 }

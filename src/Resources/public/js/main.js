@@ -1,7 +1,7 @@
 require.config({
     paths: {
-        hi_sulu_blog: '../../hiccupinsurancesulublog/js',
-        hi_sulu_blog_css: '../../hiccupinsurancesulublog/css'
+        hi_sulu_blog: '../../hiccupsulublog/js',
+        hi_sulu_blog_css: '../../hiccupsulublog/css'
     }
 });
 
@@ -13,12 +13,26 @@ define(function () {
         name: "Hiccup Blog Bundle",
 
         initialize: function (app) {
-            app.components.addSource('hi-sulu-blog', '/bundles/hiccupinsurancesulublog/js/component');
+            app.components.addSource('hiccup-sulu-blog', '/bundles/hiccupsulublog/js/component');
 
             app.sandbox.mvc.routes.push({
-                route: 'blog/list',
+                route: 'blog/posts',
                 callback: function () {
-                    return '<div data-aura-component="blog/list@hi-sulu-blog" data-aura-name="sulu" />';
+                    return '<div data-aura-component="blog/post/list@hiccup-sulu-blog" data-aura-name="sulu" />';
+                }
+            });
+
+            app.sandbox.mvc.routes.push({
+                route: 'blog/add-posts',
+                callback: function () {
+                    return '<div data-aura-component="blog/post/form@hiccup-sulu-blog" />';
+                }
+            });
+
+            app.sandbox.mvc.routes.push({
+                route: 'blog/posts::id/edit',
+                callback: function(id) {
+                    return '<div data-aura-component="blog/post/form@hiccup-sulu-blog" data-aura-id="' + id + '"/>';
                 }
             });
         }

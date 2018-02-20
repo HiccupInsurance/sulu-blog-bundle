@@ -10,3 +10,42 @@ services:
             - "%sulu_admin.name%"
         tags:
             - { name: sulu.admin }
+
+    #----------------------------------------------------------------------------------------------
+    # Constructors
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.constructor.object:
+        class: Hiccup\SuluBlogBundle\Constructor\ObjectConstructor
+        arguments:
+            - "@jms_serializer.unserialize_object_constructor"
+
+    #----------------------------------------------------------------------------------------------
+    # Managers
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.manager.post:
+        class: Hiccup\SuluBlogBundle\Manager\PostManager
+        arguments:
+            - "@hiccup_sulu_blog.repository.post"
+            - "@validator"
+
+    #----------------------------------------------------------------------------------------------
+    # Repositories
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.repository.post:
+        class: Hiccup\SuluBlogBundle\Repository\PostRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - Hiccup\SuluBlogBundle\Entity\Post
+
+    #----------------------------------------------------------------------------------------------
+    # Utilities
+    #----------------------------------------------------------------------------------------------
+
+    hiccup_sulu_blog.utility.serializer:
+        class: Hiccup\SuluBlogBundle\Utility\SerializerUtility
+        arguments:
+            - "@hiccup_sulu_blog.constructor.object"
+            - "@jms_serializer.identical_property_naming_strategy"
