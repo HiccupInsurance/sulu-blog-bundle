@@ -2,7 +2,7 @@
     "name": "hiccup/sulu-blog-bundle",
     "description": "Sulu blog bundle",
     "type": "symfony-bundle",
-    "license": "Apache License",
+    "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
             "Hiccup\\SuluBlogBundle\\": "src/"
